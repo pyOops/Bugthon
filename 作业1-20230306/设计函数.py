@@ -25,13 +25,13 @@ def rectangle_params(p1: tuple[float, float], p2: tuple[float, float]) -> Union[
     result: tuple(float, float, float)
         The area, centroid of x, centroid of y, of this rectangle
     """
-    width = abs(p1[0] - p2[0])
-    height = abs(p1[1] - p2[1])
-    area = abs(width * height)
-    if area == 0:
+    width = abs(p1[0] - p2[0])  # 计算矩形的宽度
+    height = abs(p1[1] - p2[1]) # 计算矩形的高度
+    area = abs(width * height) # 计算矩形的面积
+    if area == 0: # 如果面积为0，说明在两个方向上至少有一个方向上不构成矩形，输出相关信息，并停止函数
         return "This is not a rectangle!"
-    x_ = (p1[0] + p2[0]) / 2
-    y_ = (p1[1] + p2[1]) / 2
+    x_ = (p1[0] + p2[0]) / 2 # 形心横坐标
+    y_ = (p1[1] + p2[1]) / 2 # 形心纵坐标
     return area, x_, y_
 
 
@@ -64,12 +64,12 @@ def triangle_params(p1: tuple[float, float], p2: tuple[float, float]) -> Union[
     result: tuple(float, float, float)
         The area, centroid of x, centroid of y, of this triangle
     """
-    p3 = (p1[1], p2[0])
+    p3 = (p1[1], p2[0]) # 向左上角取点，构成直角三角形
     width = abs(p1[0] - p2[0])
     height = abs(p1[1] - p2[1])
     area = abs(width * height / 2)
-    x_ = (p1[0] + p2[0] + p3[0]) / 3
-    y_ = (p1[1] + p2[1] + p3[1]) / 3
+    x_ = (p1[0] + p2[0] + p3[0]) / 3 # 形心横坐标
+    y_ = (p1[1] + p2[1] + p3[1]) / 3 # 形心纵坐标
     return area, x_, y_
 
 
@@ -101,16 +101,16 @@ def trapezium_params(p1: tuple[float, float], p2: tuple[float, float]) -> Union[
     result: tuple(float, float, float)
         The area, centroid of x, centroid of y, of this trapezium
     """
-    p3 = (0, p1[1])
-    p4 = (0, p2[1])
-    p5 = (p1[0], p2[1])
+    p3 = (0, p1[1]) # 向z轴投影
+    p4 = (0, p2[1]) # 向z轴投影
+    p5 = (p1[0], p2[1]) # 选取p5点，使得该梯形可以被分为一个矩形和一个直角三角形
     top_base = p1[0] - p3[0]
     bottom_base = p2[0] - p4[0]
     height = abs(p3[1] - p4[1])
     area = (abs(top_base) + abs(bottom_base)) * height / 2
     AreaOfTriangle, TriangleCntroidX, TriangleCntroidY = triangle_params(p1, p2)
     AreaOfRectangle, RectangleCntroidX, RectangleCntroidY = rectangle_params(p3, p5)
-    x_ = (TriangleCntroidX * AreaOfTriangle + RectangleCntroidX * AreaOfRectangle) / area
+    x_ = (TriangleCntroidX * AreaOfTriangle + RectangleCntroidX * AreaOfRectangle) / area # 使用组合形心公式进行计算
     y_ = (TriangleCntroidY * AreaOfTriangle + RectangleCntroidY * AreaOfRectangle) / area
     return area, x_, y_
 
@@ -142,6 +142,9 @@ def cumul_list(l: list[float]) -> list[float]:
     """
     result = list()
     for i in range(len(l)):
+        '''
+        从第一个数累加到当前index的数，因此，是从0到i+1，不必担心i+1超过，因为超出不影响结果（最后还是取到最后一个元素）
+        '''
         result.append(sum(l[0:i + 1]))
     return result
 
