@@ -152,9 +152,27 @@ def cumul_list(l: list[float]) -> list[float]:
 def bonjean(data: list[tuple]) -> tuple[
     Optional[list[tuple[float, float]]], Optional[list[tuple[float, float]]], Optional[list[tuple[float, float]]]]:
     """
+    Calculates the bonjean area and the moments of every section of waterlines.
 
-    :param data:
-    :return:
+    Parameters
+    --------
+    data : list[tuple]
+        Contains some points on the bonjean curve.
+
+    Examples
+    --------
+    >>> a, h, v = bonjean([(1, 2), (2, 3), (3, 4), (4, 5), (5, 6)])
+    >>> print(a)
+        [(0, 2), (1.5, 3), (4.0, 4), (7.5, 5), (12.0, 6)]
+    >>> print(h)
+        [(0, 2), (1.3333333333333335, 3), (4.666666666666666, 4), (11.5625, 5), (23.59375, 6)]
+    >>> print(v)
+        [(0, 2), (3.666666666666667, 3), (12.333333333333332, 4), (29.21875, 5), (57.453125, 6)]
+
+    Returns
+    --------
+    result: tuple[Optional[list[tuple[float, float]]], Optional[list[tuple[float, float]]], Optional[list[tuple[float, float]]]]
+        A tuple of result, with the 1st element of area, 2nd element of horizontal 1st moment, and 3rd element of vertical 1st moment
     """
 
     def combine(data: list[float], waterline: list[float]) -> Optional[list[tuple[float, float]]]:
